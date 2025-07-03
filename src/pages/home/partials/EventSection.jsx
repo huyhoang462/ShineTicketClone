@@ -11,13 +11,12 @@ const EventSection = ({ title, events }) => {
     navigate(`/ticket-details/${eventId}`);
   };
 
-  if (!events || events.length === 0) {
+  if (!events || events?.length === 0) {
     return null;
   }
 
   return (
     <section className="my-12">
-      {/* --- Header của Section --- */}
       <div className="flex justify-between items-center mb-6 px-2">
         <h2 className="text-white text-xl md:text-2xl font-bold">{title}</h2>
         <div className="flex items-center space-x-2 text-gray-400 hover:text-primary cursor-pointer transition-colors">
@@ -27,7 +26,7 @@ const EventSection = ({ title, events }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-        {events.map((event) => (
+        {events?.map((event) => (
           <div
             className="group bg-bg-primary rounded-lg overflow-hidden shadow-lg cursor-pointer transition-transform duration-300 hover:-translate-y-1"
             key={event?._id}

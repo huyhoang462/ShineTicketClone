@@ -5,10 +5,7 @@ export const getBanner = async () => {
     const response = await axios.get(`${API_URL}/event/list_banner`);
     return response.data.data;
   } catch (error) {
-    console.error(
-      "Error fetching events by user:",
-      error.response?.data || error.message
-    );
+    console.error("Lỗi khi lấy banner:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -19,7 +16,7 @@ export const getSpecial = async () => {
     return response.data.data;
   } catch (error) {
     console.error(
-      "Error fetching events by user:",
+      "Lỗi khi lấy special:",
       error.response?.data || error.message
     );
     throw error;
@@ -31,10 +28,19 @@ export const getTrend = async () => {
     const response = await axios.get(`${API_URL}/event/list_trend`);
     return response.data.data;
   } catch (error) {
-    console.error(
-      "Error fetching events by user:",
-      error.response?.data || error.message
-    );
+    console.error("Lỗi khi lấy trend:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getEventById = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/event/get?id=${id}`);
+    console.log("event lấy về: ", response.data.event);
+
+    return response.data.event;
+  } catch (error) {
+    console.error("Lỗi khi lấy event theo id:", error);
     throw error;
   }
 };
