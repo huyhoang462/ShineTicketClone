@@ -1,4 +1,3 @@
-// src/pages/partials/QuantitySelector.jsx
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import React from "react";
 

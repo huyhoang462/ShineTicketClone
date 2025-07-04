@@ -1,5 +1,3 @@
-// src/components/Header.jsx
-
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -7,25 +5,17 @@ import {
   MagnifyingGlassIcon,
   UserCircleIcon,
   ArrowLeftStartOnRectangleIcon,
-  Bars3Icon, // Icon Hamburger
-  XMarkIcon, // Icon Close
+  Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { getUserById } from "../services/userService"; // Giả sử đường dẫn này đúng
 import MobileMenu from "./MobileMenu";
 
 const Header = () => {
   const navigate = useNavigate();
 
-  // --- State Management ---
-  // Cải tiến 1: Khởi tạo state từ localStorage để tránh UI flicker
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!localStorage.getItem("user_id")
   );
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
 
   const [isAccountMenuVisible, setIsAccountMenuVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -33,35 +23,6 @@ const Header = () => {
 
   const accountMenuRef = useRef(null);
 
-  // --- Effects ---
-  // Effect này vẫn hữu ích để cập nhật thông tin user mới nhất
-  useEffect(() => {
-    const userId = localStorage.getItem("user_id");
-    if (userId && !user) {
-      // Chỉ fetch nếu chưa có user trong state
-      const fetchUser = async () => {
-        try {
-          const response = await getUserById(userId);
-          if (response.user.errCode === 0) {
-            const userData = response.user.user;
-            localStorage.setItem("user", JSON.stringify(userData));
-            setUser(userData);
-          } else {
-            // Nếu token/id hết hạn, tự động đăng xuất
-            handleLogout();
-            console.error("Lỗi:", response.user.message);
-          }
-        } catch (error) {
-          console.error("Lỗi khi lấy thông tin người dùng:", error);
-        }
-      };
-      fetchUser();
-    }
-    // Cập nhật lại trạng thái đăng nhập phòng trường hợp localStorage thay đổi ở tab khác
-    setIsLoggedIn(!!userId);
-  }, [isLoggedIn]); // Chạy lại khi trạng thái đăng nhập thay đổi
-
-  // Effect để đóng menu khi click ra ngoài
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -75,11 +36,10 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // --- Handlers ---
   const handleSearch = () => {
-    if (searchText.trim()) {
+    if (searchText.trim() || searchText == "") {
       navigate(`/search?query=${encodeURIComponent(searchText.trim())}`);
-      setIsMobileMenuOpen(false); // Đóng menu mobile sau khi tìm kiếm
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -93,7 +53,7 @@ const Header = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("user_id");
     setIsLoggedIn(false);
-    setUser(null);
+    //setUser(null);
     setIsAccountMenuVisible(false);
     setIsMobileMenuOpen(false);
     navigate("/");
@@ -160,7 +120,7 @@ const Header = () => {
                       className="flex items-center cursor-pointer text-white font-semibold"
                     >
                       <UserCircleIcon className="h-7 w-7 mr-2" />
-                      {user?.name || "Tài khoản"}
+                      {"Tài khoản"}
                       <ChevronDownIcon
                         className={`h-5 w-5 ml-1 transition-transform ${
                           isAccountMenuVisible ? "rotate-180" : ""
@@ -223,8 +183,6 @@ const Header = () => {
         searchText={searchText}
         setSearchText={setSearchText}
       />
-
-      {/* Thêm một div để đẩy nội dung trang xuống dưới header */}
     </>
   );
 };

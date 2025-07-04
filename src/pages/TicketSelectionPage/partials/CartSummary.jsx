@@ -4,7 +4,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-// Thêm prop className để truyền class sticky vào
 const CartSummary = ({ items, total, event, className = "" }) => {
   const navigate = useNavigate();
 
@@ -16,7 +15,6 @@ const CartSummary = ({ items, total, event, className = "" }) => {
     }
   };
 
-  // Hàm an toàn để lấy địa chỉ
   const getFullAddress = () => {
     if (!event?.venue_id) return "";
     return [
@@ -34,7 +32,6 @@ const CartSummary = ({ items, total, event, className = "" }) => {
       className={`bg-gray-900 flex flex-col justify-between text-white p-5 rounded-md h-full ${className}`}
     >
       <div>
-        {/* === PHẦN BỊ XÓA ĐÃ ĐƯỢC KHÔI PHỤC === */}
         <div className="border-b border-gray-600 mb-4 pb-4">
           <h2 className="text-lg font-bold mb-4">{event?.event_name}</h2>
           <div className="space-y-2 text-sm">

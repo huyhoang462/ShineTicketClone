@@ -109,7 +109,7 @@ const TicketSelectionPage = () => {
           onClick={() =>
             navigate("/payment", { state: { items: cartItems, total, event } })
           }
-          className="bg-primary text-black font-semibold py-2 px-6 rounded-lg disabled:bg-gray-600 disabled:cursor-not-allowed"
+          className="bg-primary text-black cursor-pointer hover:bg-white hover:text-black font-semibold py-2 px-6 rounded-lg disabled:bg-gray-600 disabled:cursor-not-allowed"
           disabled={!cartItems || cartItems.length === 0}
         >
           Thanh toán

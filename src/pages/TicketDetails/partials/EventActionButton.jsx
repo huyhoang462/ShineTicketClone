@@ -9,13 +9,13 @@ const EventActionButton = ({ event, className = "" }) => {
 
   if (new Date(event.start_date) > new Date()) {
     return event.available_tickets > 0 ? (
-      <Link to={`/select-ticket?eventId=${event._id}`} state={{ event }}>
-        <button
-          className={`${buttonBaseClass} bg-primary hover:bg-white cursor-pointer hover:text-black`}
-        >
+      <button
+        className={`${buttonBaseClass} bg-primary hover:bg-white cursor-pointer hover:text-black`}
+      >
+        <Link to={`/select-ticket?eventId=${event._id}`} state={{ event }}>
           Mua vé
-        </button>
-      </Link>
+        </Link>
+      </button>
     ) : (
       <button
         className={`${buttonBaseClass} bg-gray-500 cursor-not-allowed`}
