@@ -7,7 +7,6 @@ import { eventService } from "../../services";
 import { API_IMAGE } from "../../constants";
 import { FunnelIcon } from "@heroicons/react/20/solid";
 
-// Giá trị mặc định cho bộ lọc, để dễ dàng reset và khởi tạo
 const defaultFilters = {
   dateFrom: "",
   dateTo: "",
@@ -22,23 +21,18 @@ export default function Search() {
   const searchQuery = searchParams.get("query") || "";
   const categoryQuery = searchParams.get("category");
 
-  // State để lưu các giá trị filter đã được "Áp dụng"
-  // Khởi tạo state này một cách thông minh dựa trên tham số từ URL
   const [appliedFilters, setAppliedFilters] = useState(() => {
     if (categoryQuery) {
-      // Nếu có category trên URL, tạo một bộ lọc ban đầu với category đó
       return {
         ...defaultFilters,
-        category: decodeURIComponent(categoryQuery), // Giải mã URL để xử lý ký tự đặc biệt
+        category: decodeURIComponent(categoryQuery),
       };
     }
-    // Nếu không, bắt đầu với không có bộ lọc nào được áp dụng
     return null;
   });
 
   const [isFilterVisible, setFilterVisible] = useState(false);
 
-  // 1. useQuery chỉ để lấy dữ liệu gốc 1 lần
   const {
     data: allEvents = [],
     isLoading,
@@ -50,25 +44,21 @@ export default function Search() {
     refetchOnWindowFocus: false,
   });
 
-  // 2. Dùng useMemo để tính toán kết quả hiển thị một cách hiệu quả
   const displayResults = useMemo(() => {
     if (!allEvents || allEvents.length === 0) return [];
 
-    // Bắt đầu với tất cả sự kiện đang/sắp diễn ra
     let results = allEvents.filter(
       (event) =>
         event.event_status_id?._id === "675ea25872e40e87eb7dbf08" ||
         event.event_status_id?._id === "675ea24172e40e87eb7dbf06"
     );
 
-    // Lọc theo từ khóa tìm kiếm (luôn áp dụng)
     if (searchQuery) {
       results = results.filter((event) =>
         event.event_name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
-    // Chỉ lọc theo bộ lọc chi tiết NẾU người dùng đã nhấn "Áp dụng" (hoặc được set từ URL)
     if (appliedFilters) {
       results = results.filter((event) => {
         const eventDate = new Date(event.start_date);

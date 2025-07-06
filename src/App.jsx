@@ -24,6 +24,7 @@ import AdminEvents from "./pages/AdminEvents";
 import AdminInvoices from "./pages/AdminInvoice";
 import AdminPay from "./pages/AdminPay";
 import PrivateRoute from "./components/PrivateRoute";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -84,6 +85,7 @@ function App() {
             <Route path="invoices" element={<AdminInvoices />} />
             <Route path="pay" element={<AdminPay />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
