@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import OrderInvoices from "./Partials/OrderInvoices";
+import OrderInvoices from "./partials/OrderInvoices";
 import { useParams } from "react-router-dom";
 import { orderService } from "../../services";
 

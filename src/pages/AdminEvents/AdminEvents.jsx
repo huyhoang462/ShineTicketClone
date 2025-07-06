@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import EventList from "./Partials/EventList";
-import EventDetailsModal from "./Partials/EventDetailsModal";
+import EventList from "./partials/EventList";
+import EventDetailsModal from "./partials/EventDetailsModal";
 import { eventService } from "../../services";
-import EventSearchBar from "./Partials/EventSearchBar";
+import EventSearchBar from "./partials/EventSearchBar";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function AdminEvents() {
