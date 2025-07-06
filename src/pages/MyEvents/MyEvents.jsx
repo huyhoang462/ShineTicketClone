@@ -74,7 +74,7 @@ const MyEvents = () => {
             <button
               key={filter}
               onClick={() => filterEvents(filter)}
-              className={`px-4 py-2 rounded-lg text-xs md:text-sm font-semibold flex-shrink-0 transition-colors ${
+              className={`px-4 py-2 cursor-pointer rounded-lg text-xs md:text-sm font-semibold flex-shrink-0 transition-colors ${
                 activeFilter === filter
                   ? "bg-primary text-black"
                   : "bg-white text-black hover:bg-gray-200"

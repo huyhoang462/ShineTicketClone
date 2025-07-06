@@ -69,7 +69,7 @@ const BigTicket = ({ event }) => {
               </div>
               <EventActionButton
                 event={event}
-                className="w-full  text-sm sm:text-md md:text-lg py-2 sm:py-3  "
+                className="w-full  text-sm sm:text-md md:text-lg   "
               />
             </div>
           </div>

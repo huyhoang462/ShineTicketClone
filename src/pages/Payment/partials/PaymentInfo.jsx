@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const PaymentInfo = ({ info }) => {
-  const navigate = useNavigate(); // Hook để điều hướng
+  const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(-1); // Quay lại trang trước đó
+    navigate(-1);
   };
   return (
     <div className="text-white p-4 rounded-lg space-y-4 bg-black">
@@ -14,7 +14,7 @@ const PaymentInfo = ({ info }) => {
         <h2>THANH TOÁN</h2>
         <button
           className="text-sm text-gray-300 hover:text-primary underline"
-          onClick={handleBack} // Gọi hàm quay lại
+          onClick={handleBack}
         >
           Chọn lại vé
         </button>
@@ -56,7 +56,6 @@ const PaymentInfo = ({ info }) => {
         </div>
       </div>
 
-      {/* Phương thức thanh toán */}
       <div className="bg-bg-main p-6 rounded-lg shadow-md">
         <h3 className="text-primary font-bold text-lg border-b border-gray-500 pb-2">
           Phương thức thanh toán

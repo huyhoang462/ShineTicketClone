@@ -24,12 +24,11 @@ export default function Login() {
       const result = await authService.handleLogin(email, password);
       console.log("Login successful", result.data.user);
 
-      localStorage.setItem("accessToken", result.data.accessToken);
-      localStorage.setItem("refreshToken", result.data.refreshToken);
       localStorage.setItem("user_id", result.data.user._id);
       localStorage.setItem("role", result.data.user.role);
       setErrorMessage("");
       if (result.data.user.role === 0) nav("/");
+      else if (result.data.user.role === 1) nav("/admin/dashboard");
     } catch (error) {
       setErrorMessage(error.message || "Login failed");
     }
@@ -67,6 +66,7 @@ export default function Login() {
               Email
             </label>
             <input
+              spellCheck="false"
               type="email"
               name="email"
               id="email"

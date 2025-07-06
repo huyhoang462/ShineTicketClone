@@ -50,10 +50,9 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
     localStorage.removeItem("user_id");
+    localStorage.removeItem("role");
     setIsLoggedIn(false);
-    //setUser(null);
     setIsAccountMenuVisible(false);
     setIsMobileMenuOpen(false);
     navigate("/");
