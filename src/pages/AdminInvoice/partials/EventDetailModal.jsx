@@ -19,7 +19,7 @@ const EventDetailsModal = ({ selectedEvent, closeModal }) => {
             <span>{selectedEvent?.event_id?.event_name}</span>
           </h2>
           <button
-            className="text-gray-500 hover:text-red-500 text-xl"
+            className="text-gray-500 cursor-pointer hover:text-red-500 text-xl"
             onClick={closeModal}
           >
             <XMarkIcon className="h-6 w-6" />

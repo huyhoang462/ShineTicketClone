@@ -1,6 +1,7 @@
 import React from "react";
 import { eventService } from "../../../services";
 import { XMarkIcon, CalendarIcon, UserIcon } from "@heroicons/react/24/outline";
+import { API_IMAGE } from "../../../constants";
 const EventDetailsModal = ({ event, onClose, refreshData }) => {
   if (!event) return null;
 
@@ -38,9 +39,9 @@ const EventDetailsModal = ({ event, onClose, refreshData }) => {
         {/* Header */}
         <div className="relative">
           {event?.cover_image_url && (
-            <div className="relative w-full h-56 bg-gray-100">
+            <div className="relative w-full h-56 ">
               <img
-                src={`http://localhost:8080/images/${event?.cover_image_url}`}
+                src={`${API_IMAGE}/${event?.cover_image_url}`}
                 alt={event?.event_name}
                 className="w-full h-full object-cover rounded-t-lg"
               />
@@ -48,7 +49,7 @@ const EventDetailsModal = ({ event, onClose, refreshData }) => {
           )}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 bg-gray-200 text-gray-600 rounded-full w-10 h-10 flex items-center justify-center hover:bg-gray-300 focus:outline-none"
+            className="absolute top-4 cursor-pointer right-4 bg-gray-200 text-gray-600 rounded-full w-10 h-10 flex items-center justify-center hover:bg-gray-300 focus:outline-none"
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
@@ -171,7 +172,7 @@ const EventDetailsModal = ({ event, onClose, refreshData }) => {
           <div className="flex justify-end space-x-4">
             <button
               onClick={onClose}
-              className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 focus:outline-none"
+              className="bg-gray-200 cursor-pointer text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 focus:outline-none"
             >
               Đóng
             </button>

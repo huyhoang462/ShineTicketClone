@@ -39,10 +39,10 @@ const EventInvoices = ({ invoices }) => {
                 {invoice?.organizer_id?.organizer_name}
               </td>
               <td className="px-4 py-2">
-                {invoice?.total_amount?.$numberDecimal} VNĐ
+                {invoice?.total_amount?.$numberDecimal?.toLocaleString()} VNĐ
               </td>
               <td className="px-4 py-2">
-                {invoice?.refund_amount?.$numberDecimal} VNĐ
+                {invoice?.refund_amount?.$numberDecimal?.toLocaleString()} VNĐ
               </td>
               <td className="px-4 py-2">
                 {new Date(invoice?.refund_date).toLocaleDateString("vi-VN", {

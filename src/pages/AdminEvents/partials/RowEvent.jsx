@@ -1,3 +1,4 @@
+// src/pages/admin/partials/RowEvent.jsx
 import { EyeIcon } from "@heroicons/react/24/outline";
 
 export default function RowEvent({ event, onViewDetails }) {
@@ -15,42 +16,38 @@ export default function RowEvent({ event, onViewDetails }) {
     "675ea26172e40e87eb7dbf0a": "Đã kết thúc",
     "676ece8250c4e95732edbadf": "Đã hủy",
   };
+
+  // Thêm key vào thẻ tr để React nhận diện
   return (
-    <tr key={event._id} className="hover:bg-gray-800 text-gray-200">
-      <td className="px-4 py-2">{event?.event_name}</td>
-      <td className="px-4 py-2">
-        {" "}
+    <tr key={event._id} className="hover:bg-gray-800 text-gray-200 text-sm">
+      <td className="px-4 py-3">{event?.event_name}</td>
+      <td className="px-4 py-3">
         {new Date(event?.start_date).toLocaleDateString("vi-VN", {
-          imeZone: "UTC",
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
         })}
       </td>
-      <td className="px-4 py-2">
+      <td className="px-4 py-3">
         {new Date(event?.end_date).toLocaleDateString("vi-VN", {
-          imeZone: "UTC",
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
         })}
       </td>
       <td
-        className={`px-4 py-2 font-semibold ${
+        className={`px-4 py-3 font-semibold ${
           statusColorMap[event?.event_status_id?._id] || "text-gray-500"
         }`}
       >
         {statusTextMap[event?.event_status_id?._id] || "Không xác định"}
       </td>
-
-      <td className="px-4 py-2 text-center">
+      <td className="px-4 py-3 text-center">
         <button
-          className="text-blue-500 hover:underline flex items-center justify-center"
-          onClick={() => {
-            onViewDetails(event);
-          }}
+          className="text-gray-400 hover:text-primary transition-colors"
+          onClick={() => onViewDetails(event)}
         >
-          <EyeIcon className="h-6 text-gray-300 cursor-pointer hover:text-primary transition-colors duration-200" />
+          <EyeIcon className="h-6 w-6" />
         </button>
       </td>
     </tr>

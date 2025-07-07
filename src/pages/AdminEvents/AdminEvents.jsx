@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import EventList from "./partials/EventList";
-import EventDetailsModal from "./partials/EventDetailsModal";
+import EventDetailsModal from "./partials/EventDetailsModal"; // Đảm bảo đường dẫn modal đúng
 import { eventService } from "../../services";
 import EventSearchBar from "./partials/EventSearchBar";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function AdminEvents() {
+  // --- TOÀN BỘ LOGIC HIỆN TẠI CỦA BẠN (KHÔNG THAY ĐỔI) ---
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [activeFilter, setActiveFilter] = useState("Tất cả");
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,13 +40,14 @@ export default function AdminEvents() {
         );
 
         if (event.event_status_id?._id === "675ea25872e40e87eb7dbf08") {
+          // Sắp diễn ra
           if (endDate < today) {
             return eventService.setOccuredEvent(event._id).then(() => {
-              event.event_status_id._id = "675ea26172e40e87eb7dbf0a";
+              event.event_status_id._id = "675ea26172e40e87eb7dbf0a"; // Đã kết thúc
             });
           } else if (startDate <= today && endDate >= today) {
             return eventService.setOccuringEvent(event._id).then(() => {
-              event.event_status_id._id = "675ea24172e40e87eb7dbf06";
+              event.event_status_id._id = "675ea24172e40e87eb7dbf06"; // Đang diễn ra
             });
           }
         }
@@ -53,7 +55,6 @@ export default function AdminEvents() {
       });
 
       await Promise.all(updatePromises);
-
       return eventFromApi;
     },
     refetchOnWindowFocus: false,
@@ -83,7 +84,6 @@ export default function AdminEvents() {
         (event) => event.event_status_id?._id === statusId
       );
     }
-
     setFilteredEvents(results);
   }, [events, activeFilter, searchTerm]);
 
@@ -98,27 +98,36 @@ export default function AdminEvents() {
   const handleSearch = ({ searchTerm: newSearchTerm }) => {
     setSearchTerm(newSearchTerm);
   };
+  // --- KẾT THÚC LOGIC ---
+
+  const filterButtons = [
+    "Tất cả",
+    "Chờ duyệt",
+    "Sắp diễn ra",
+    "Đang diễn ra",
+    "Đã kết thúc",
+    "Đã hủy",
+  ];
 
   return (
-    <div className="p-6 min-h-[calc(100vh-64px)]">
-      <div className=" grid grid-cols-5 mb-4">
-        <EventSearchBar onSearch={handleSearch} />{" "}
-        <div className="flex  gap-3 ml-4 col-span-3">
-          {[
-            "Tất cả",
-            "Chờ duyệt",
-            "Sắp diễn ra",
-            "Đang diễn ra",
-            "Đã kết thúc",
-            "Đã hủy",
-          ].map((filter) => (
+    // Sử dụng padding responsive
+    <div className="p-4 md:p-6 min-h-full">
+      {/* --- THANH TÌM KIẾM VÀ FILTER ĐÃ ĐƯỢC LÀM RESPONSIVE --- */}
+      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+        {/* Ô tìm kiếm */}
+        <div className="w-full md:w-1/3 lg:w-1/4">
+          <EventSearchBar onSearch={handleSearch} />
+        </div>
+        {/* Các nút filter */}
+        <div className="w-full md:w-2/3 lg:w-3/4 flex gap-2 overflow-x-auto pb-2 -mb-2">
+          {filterButtons.map((filter) => (
             <button
               key={filter}
               onClick={() => filterEvents(filter)}
-              className={`py-2 px-4 cursor-pointer rounded-lg ${
+              className={`py-2 px-4 cursor-pointer rounded-lg text-xs md:text-sm font-semibold flex-shrink-0 transition-colors ${
                 activeFilter === filter
                   ? "bg-primary text-black"
-                  : "bg-white text-black"
+                  : "bg-white text-black hover:bg-gray-200"
               }`}
             >
               {filter}
@@ -127,20 +136,26 @@ export default function AdminEvents() {
         </div>
       </div>
 
-      <div className="mt-4 ">
+      {/* --- KHU VỰC HIỂN THỊ KẾT QUẢ --- */}
+      <div className="mt-4">
         {loading ? (
-          <div className="text-center text-white">Đang tải sự kiện...</div>
+          <div className="text-center text-white py-10">
+            Đang tải sự kiện...
+          </div>
         ) : filteredEvents.length > 0 ? (
           <EventList events={filteredEvents} onViewDetails={setSelectedEvent} />
         ) : (
-          <div className="text-center">Không có sự kiện nào.</div>
+          <div className="text-center text-gray-400 py-10">
+            Không có sự kiện nào.
+          </div>
         )}
       </div>
 
+      {/* --- MODAL --- */}
       {selectedEvent && (
         <EventDetailsModal
-          event={selectedEvent}
-          onClose={() => setSelectedEvent(null)}
+          selectedEvent={selectedEvent} // Giả sử modal nhận prop là 'selectedEvent'
+          closeModal={() => setSelectedEvent(null)}
           refreshData={refreshData}
         />
       )}

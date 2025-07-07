@@ -141,6 +141,24 @@ export const postEvent = async (eventData) => {
     throw error;
   }
 };
+export const updatePaidEvent = async (eventId) => {
+  try {
+    const response = await axios.put(`${API_URL}/event/update`, {
+      eventId: eventId,
+      paidStatus: "true",
+    });
+    console.log("cập nhật: ", response.data);
+
+    return response.data; // Trả về dữ liệu từ API
+  } catch (error) {
+    console.error(
+      "Error set occuring events:",
+      error.response?.data || error.message
+    );
+    throw error; // Ném lỗi để xử lý ở nơi gọi hàm nếu cần
+  }
+};
+
 export const setWillOccureEvent = async (id) => {
   try {
     const response = await axios.put(`${API_URL}/event/edit`, {

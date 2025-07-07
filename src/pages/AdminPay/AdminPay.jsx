@@ -9,25 +9,24 @@ export default function AdminPay() {
   const [filteredEvents, setFilteredEvents] = useState([]); // Danh sách hiển thị
   const [loading, setLoading] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-
+  const fetchEvents = async () => {
+    setLoading(true);
+    try {
+      const events = await orderService.getEventPay();
+      const filtered = events.filter(
+        (event) =>
+          event.event_status_id._id === "675ea26172e40e87eb7dbf0a" &&
+          !event.paid
+      );
+      setPayEvents(filtered);
+      setFilteredEvents(filtered);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchEvents = async () => {
-      setLoading(true);
-      try {
-        const events = await orderService.getEventPay();
-        const filtered = events.filter(
-          (event) =>
-            event.event_status_id._id === "675ea26172e40e87eb7dbf0a" &&
-            !event.paid
-        );
-        setPayEvents(filtered);
-        setFilteredEvents(filtered);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchEvents();
   }, []);
 
@@ -67,6 +66,7 @@ export default function AdminPay() {
           <EventDetailsModal
             event={selectedEvent}
             onClose={() => setSelectedEvent(null)}
+            refresh={fetchEvents}
           />
         </>
       )}

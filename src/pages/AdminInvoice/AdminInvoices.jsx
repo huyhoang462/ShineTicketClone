@@ -14,7 +14,7 @@ const AdminInvoices = () => {
     setLoading(true);
     try {
       const ordersFromApi = await orderService.getAllOrders();
-      setOrders(ordersFromApi);
+      setOrders(ordersFromApi?.reverse());
     } catch (error) {
       console.error("Error fetching events:", error);
       toast.error("Không thể tải dữ liệu. Vui lòng thử lại!");
@@ -26,7 +26,7 @@ const AdminInvoices = () => {
     setLoading(true);
     try {
       const refundApi = await orderService.getAllRefund();
-      setRefunds(refundApi);
+      setRefunds(refundApi?.reverse());
     } catch (error) {
       console.error("Error fetching refund:", error);
       toast.error("Không thể tải dữ liệu. Vui lòng thử lại!");

@@ -5,10 +5,10 @@ import {
   CurrencyDollarIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { orderService } from "../../../services";
+import { orderService, eventService } from "../../../services";
 import { toast } from "react-toastify"; // Import Toastify
 
-const EventDetailsModal = ({ event, onClose }) => {
+const EventDetailsModal = ({ event, onClose, refresh }) => {
   if (!event) return null;
 
   // Xử lý thanh toán hoàn tiền
@@ -24,8 +24,11 @@ const EventDetailsModal = ({ event, onClose }) => {
         refund_date: now,
       };
 
-      await orderService.createRefund(formData);
-
+      const resRefund = await orderService.createRefund(formData);
+      console.log(("tạo refund: ", resRefund));
+      const resPaid = await eventService.updatePaidEvent(event?._id);
+      console.log(("tạo paid: ", resPaid));
+      refresh();
       onClose();
     } catch (error) {
       console.error("Error processing refund:", error);
@@ -34,7 +37,7 @@ const EventDetailsModal = ({ event, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 ">
       <div className="bg-gray-800 text-gray-200  rounded-xl shadow-lg p-8 w-11/12 max-w-4xl overflow-y-auto">
         <div className="flex justify-between items-center border-b pb-4 mb-6">
           <h2 className="text-2xl font-extrabold text-gray-200 flex items-center space-x-2">
@@ -112,13 +115,13 @@ const EventDetailsModal = ({ event, onClose }) => {
             <p className="flex justify-between">
               <span className=" text-gray-300">Doanh thu:</span>
               <span className="font-medium text-xl text-green-500">
-                {event?.event_total_amount} VNĐ
+                {event?.event_total_amount?.toLocaleString()} VNĐ
               </span>
             </p>
             <p className="flex justify-between">
               <span className=" text-gray-300">Tiền cần thanh toán:</span>
               <span className="font-medium text-xl text-red-500">
-                {(event?.event_total_amount * 90) / 100} VNĐ
+                {((event?.event_total_amount * 90) / 100)?.toLocaleString()} VNĐ
               </span>
             </p>
           </div>
