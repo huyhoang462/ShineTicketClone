@@ -4,9 +4,19 @@ Shine Ticket is a comprehensive event marketplace platform built with React, all
 
 ---
 
-## ✨ Live Demo & Repositories
+## ✨ Live Demo
 
 **[➡️ View Live Demo on Vercel](https://shine-ticket-clone.vercel.app/)**
+
+### 👤 **User Account**
+
+- **Email:** `hoangpk@gmail.com`
+- **Password:** `12345678`
+
+### 💼 **Admin Account**
+
+- **Email:** `admin@gmail.com`
+- **Password:** `12345678`
 
 ## Original University Project Code
 
